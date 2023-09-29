@@ -58,7 +58,7 @@ export const Header = ({selectedDays}: PropsType) => {
                     maxHeight={300}
                     labelField="label"
                     valueField="value"
-                    placeholder={!isFocus ? 'Select city' : '...'}
+                    placeholder={!isFocus ? 'Select location' : '...'}
                     searchPlaceholder="Search..."
                     value={value}
                     onFocus={() => setIsFocus(true)}
