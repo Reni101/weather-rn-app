@@ -1,6 +1,6 @@
 import React from 'react';
 import {Pressable, StyleSheet, Text, View} from "react-native";
-import {PADDING, WIDTH} from "../../constant/constant";
+import {PADDING, WIDTH} from "../../common/constant/constant";
 
 type PropsType = {
     selectedDays: number

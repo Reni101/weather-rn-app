@@ -1,5 +1,5 @@
 import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {createAppAsyncThunk} from "../utils/create-app-async-thunk";
+import {createAppAsyncThunk} from "../common/utils/create-app-async-thunk";
 import {weatherApi} from "../api/weather.api";
 import {weatherResType} from "../api/type";
 import {RootState} from "./store";
@@ -22,6 +22,10 @@ export const getWeather = createAppAsyncThunk<weatherResType, { day: number }>(
     }
 )
 
+type initStateType = {
+    weatherRes: weatherResType,
+    geolocation: geolocationType
+}
 
 const initialState: initStateType = {
     weatherRes: {} as weatherResType,
@@ -79,7 +83,3 @@ export type geolocationType = {
     lon: null | number
 }
 
-type initStateType = {
-    weatherRes: weatherResType,
-    geolocation: geolocationType
-}

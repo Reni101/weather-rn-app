@@ -1,11 +1,11 @@
 import {Platform, StyleSheet, View} from "react-native";
 import {Dropdown} from "react-native-element-dropdown";
 import {useEffect, useState} from "react";
-import {PADDING, WIDTH} from "../../constant/constant";
-import {getWeather, selectGeolocation, setLocation} from "../../service/weather.slice";
-import {useAppDispatch, useAppSelector} from "../../hooks/useAppHooks";
-import {useGetLocation} from "../../hooks/useGetLocation";
-import {cityGeolocation} from "../../constant/cityGeolocation";
+import {PADDING, WIDTH} from "../../common/constant/constant";
+import {getWeather, selectGeolocation, setLocation} from "../../service/weather-slice";
+import {useAppDispatch, useAppSelector} from "../../common/hooks/useAppHooks";
+import {useGetLocation} from "../../common/hooks/useGetLocation";
+import {cityGeolocation} from "../../common/constant/city-geolocation";
 
 type PropsType = {
     selectedDays: number

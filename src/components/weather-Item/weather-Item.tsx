@@ -1,7 +1,7 @@
 import React from 'react';
 import {ListRenderItem, StyleSheet, Text, View} from "react-native";
-import {weatherItemType} from "../../service/weather.slice";
-import {PADDING, WIDTH} from "../../constant/constant";
+import {weatherItemType} from "../../service/weather-slice";
+import {PADDING, WIDTH} from "../../common/constant/constant";
 
 import moment from "moment";
 

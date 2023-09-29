@@ -1,4 +1,4 @@
-import {geolocationType} from "../service/weather.slice";
+import {geolocationType} from "../../service/weather-slice";
 
 type CityGeolocationType = {
     [key: string]: geolocationType

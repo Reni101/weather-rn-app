@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {FlatList, StatusBar, StyleSheet, Text} from "react-native";
-import {useAppSelector} from "../../hooks/useAppHooks";
-import {selectWeather} from "../../service/weather.slice";
+import {useAppSelector} from "../../common/hooks/useAppHooks";
+import {selectWeather} from "../../service/weather-slice";
 import {LinearGradient} from "expo-linear-gradient";
 import {Header} from "../header/header";
 import {CurrentWeather} from "../current-weather/current-weather";
-import {weatherItem} from "../../common/weather-Item/weather-Item";
-import {DaysButtonRender} from "../../common/days-button-item/days-button-render";
+import {weatherItem} from "../weather-Item/weather-Item";
+import {DaysButtonRender} from "../days-button-item/days-button-render";
 
 
 export const WeatherRoot = () => {

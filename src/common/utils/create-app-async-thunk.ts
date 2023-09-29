@@ -1,4 +1,4 @@
-import {AppDispatch, RootState} from "../service/store";
+import {AppDispatch, RootState} from "../../service/store";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 
 

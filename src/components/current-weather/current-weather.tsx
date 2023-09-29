@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text} from "react-native";
 import moment from "moment/moment";
-import {useAppSelector} from "../../hooks/useAppHooks";
-import {selectCurrentWeather} from "../../service/weather.slice";
+import {useAppSelector} from "../../common/hooks/useAppHooks";
+import {selectCurrentWeather} from "../../service/weather-slice";
 
 export const CurrentWeather = () => {
     const current_weather = useAppSelector(selectCurrentWeather)
