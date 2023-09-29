@@ -58,7 +58,8 @@ export const weatherReducer = slice.reducer
 export const selectState = (state: RootState) => state.weather.weatherRes
 export const selectCurrentWeather = (state: RootState) => state.weather.weatherRes.current_weather
 export const selectGeolocation = (state: RootState) => state.weather.geolocation
-export const selectWeather = createSelector(selectState, (state) => {
+
+export const selectWeatherForDays = createSelector(selectState, (state) => {
 
     const arr: weatherItemType[] = []
     for (let i = 1; i < state.daily?.time.length; i++) {

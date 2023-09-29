@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {FlatList, StatusBar, StyleSheet, Text} from "react-native";
 import {useAppSelector} from "../../common/hooks/useAppHooks";
-import {selectWeather} from "../../service/weather-slice";
+import {selectWeatherForDays} from "../../service/weather-slice";
 import {LinearGradient} from "expo-linear-gradient";
 import {Header} from "../header/header";
 import {CurrentWeather} from "../current-weather/current-weather";
@@ -11,7 +11,7 @@ import {DaysButtonRender} from "../days-button-item/days-button-render";
 
 export const WeatherRoot = () => {
 
-    const arrWeather = useAppSelector(selectWeather)
+    const weatherForDays = useAppSelector(selectWeatherForDays)
     const [selectedDays, setSelectDays] = useState<number>(0)
 
     return (
@@ -28,7 +28,7 @@ export const WeatherRoot = () => {
 
             <CurrentWeather/>
 
-            <FlatList data={arrWeather} renderItem={weatherItem} bounces={false}/>
+            <FlatList data={weatherForDays} renderItem={weatherItem} bounces={false}/>
         </LinearGradient>
 
     );
