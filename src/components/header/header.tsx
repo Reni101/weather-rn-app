@@ -22,7 +22,6 @@ export const Header = () => {
     return (
         <View style={styles.header}>
             <View style={styles.container}>
-                {/*{renderLabel()}*/}
                 <Dropdown
                     style={[styles.dropdown]}
                     placeholderStyle={styles.placeholderStyle}
