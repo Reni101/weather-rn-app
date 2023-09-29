@@ -9,9 +9,8 @@ export const weatherItem: ListRenderItem<weatherItemType> = ({item}) => {
 
     return <View key={item.time} style={styles.container}>
         <Text style={styles.item}>{moment(item.time).local(true).format("dddd").slice(0, 3)}</Text>
-        <Text style={[styles.item, {alignSelf:'center'}]}> {moment(item.time).format("DD.MM")}</Text>
+        <Text style={[styles.item, {alignSelf: 'center'}]}> {moment(item.time).format("DD.MM")}</Text>
         <Text style={styles.item}> {item.min} - {item.max} ℃</Text>
-
     </View>
 }
 
@@ -29,7 +28,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     item: {
-        // marginHorizontal:30,
         minWidth: 40,
     },
 })

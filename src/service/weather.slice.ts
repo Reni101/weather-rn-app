@@ -1,15 +1,17 @@
-import {createSelector, createSlice} from '@reduxjs/toolkit'
+import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {createAppAsyncThunk} from "../utils/create-app-async-thunk";
 import {weatherApi} from "../api/weather.api";
-import {weatherRes} from "../api/type";
+import {weatherResType} from "../api/type";
 import {RootState} from "./store";
 
 
-export const getWeather = createAppAsyncThunk<any, { lat: number, lon: number, day: number }>(
+export const getWeather = createAppAsyncThunk<weatherResType, { day: number }>(
     'weatherReducer/getWeather',
-    async (params, {rejectWithValue}) => {
+    async (params, {rejectWithValue, getState}) => {
+
         try {
-            const res = await weatherApi.getWeather(params.lat, params.lon, params.day)
+            const {lat, lon} = getState().weather.geolocation
+            const res = await weatherApi.getWeather(lat!, lon!, params.day)
             return res.data
 
         } catch (e) {
@@ -19,27 +21,42 @@ export const getWeather = createAppAsyncThunk<any, { lat: number, lon: number, d
 
     }
 )
-const initialState = {} as weatherRes
+
+
+const initialState: initStateType = {
+    weatherRes: {} as weatherResType,
+    geolocation: {
+        lat: null,
+        lon: null
+    }
+}
 
 const slice = createSlice({
     name: 'weatherReducer',
     initialState,
-    reducers: {},
+    reducers: {
+        setLocation(state, action: PayloadAction<geolocationType>) {
+            state.geolocation.lat = action.payload.lat
+            state.geolocation.lon = action.payload.lon
+        }
+    },
     extraReducers: builder => {
         builder.addCase(getWeather.fulfilled, (state, action) => {
-            return action.payload
+            state.weatherRes = action.payload
         })
     }
 
 })
 
-export const {} = slice.actions
+export const {setLocation} = slice.actions
 export const weatherReducer = slice.reducer
 
-export const selectState = (state: RootState) => state.weather
+export const selectState = (state: RootState) => state.weather.weatherRes
+export const selectCurrentWeather = (state: RootState) => state.weather.weatherRes.current_weather
+export const selectGeolocation = (state: RootState) => state.weather.geolocation
 export const selectWeather = createSelector(selectState, (state) => {
 
-    const arr:weatherItemType[] = []
+    const arr: weatherItemType[] = []
     for (let i = 1; i < state.daily?.time.length; i++) {
         arr[i - 1] = {
             max: state.daily.temperature_2m_max[i],
@@ -55,4 +72,14 @@ export type weatherItemType = {
     time: string,
     min: number,
     max: number
+}
+
+export type geolocationType = {
+    lat: null | number,
+    lon: null | number
+}
+
+type initStateType = {
+    weatherRes: weatherResType,
+    geolocation: geolocationType
 }

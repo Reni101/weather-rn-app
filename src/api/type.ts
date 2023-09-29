@@ -1,4 +1,4 @@
-export type weatherRes = {
+export type weatherResType = {
 	latitude: number;
 	longitude: number;
 	generationtime_ms: number;

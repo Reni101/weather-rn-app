@@ -2,25 +2,26 @@ import React from 'react';
 import {StyleSheet, Text} from "react-native";
 import moment from "moment/moment";
 import {useAppSelector} from "../../hooks/useAppHooks";
+import {selectCurrentWeather} from "../../service/weather.slice";
 
 export const CurrentWeather = () => {
-    const current_weather = useAppSelector(state => state.weather.current_weather)
+    const current_weather = useAppSelector(selectCurrentWeather)
 
     return (
         <>
-            <Text style={styles.currentDate}>Today {moment(current_weather?.time).format("DD.MM")}</Text>
-            <Text style={styles.currentTemp}>{current_weather?.temperature} ℃</Text>
+            <Text style={styles.current_date}>Today {moment(current_weather?.time).format("DD.MM")}</Text>
+            <Text style={styles.current_temp}>{current_weather?.temperature} ℃</Text>
         </>
     );
 };
 
 const styles = StyleSheet.create({
-    currentDate: {
+    current_date: {
         marginTop: 10,
         color: '#fff',
         fontSize: 25,
     },
-    currentTemp: {
+    current_temp: {
         color: '#fff',
         fontSize: 30,
         marginVertical: 10,

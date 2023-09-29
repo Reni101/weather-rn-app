@@ -1,34 +1,59 @@
 import {Platform, StyleSheet, View} from "react-native";
 import {Dropdown} from "react-native-element-dropdown";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {PADDING, WIDTH} from "../../constant/constant";
+import {getWeather, selectGeolocation, setLocation} from "../../service/weather.slice";
+import {useAppDispatch, useAppSelector} from "../../hooks/useAppHooks";
+import {useGetLocation} from "../../hooks/useGetLocation";
+import {cityGeolocation} from "../../constant/cityGeolocation";
 
-const data = [
-    {label: 'My location', value: '1'},
-    {label: 'Brest', value: '2'},
-    {label: 'Vitebsk', value: '3'},
-    {label: 'Gomel', value: '4'},
-    {label: 'Grodno', value: '5'},
-    {label: 'Mogilev', value: '6'},
-    {label: 'Minsk', value: '7'},
-];
+type PropsType = {
+    selectedDays: number
+}
 
-export const Header = () => {
-    const [value, setValue] = useState<string | null>('1');
+export const Header = ({selectedDays}: PropsType) => {
+    const dispatch = useAppDispatch()
+    const {lat, lon} = useAppSelector(selectGeolocation)
+
+    const [value, setValue] = useState<string | null>('My location');
     const [isFocus, setIsFocus] = useState(false);
-    console.log(value)
+
+    const {lat: myLat, lon: myLon} = useGetLocation()
 
 
+    useEffect(() => {
+        if (lat && lon) {
+            dispatch(getWeather({day: selectedDays}))
+        } else if (myLat && myLon) {
+            dispatch(setLocation({lat: myLat, lon: myLon}))
+        }
+    }, [lat, lon, myLat, myLon, selectedDays])
+
+
+    const onChangeHandler = (item: { label: string, value: string }) => {
+
+        dispatch(setLocation({
+            lat: cityGeolocation[item.value].lat,
+            lon: cityGeolocation[item.value].lon
+        }))
+
+        setValue(item.value);
+        setIsFocus(false);
+
+    };
     return (
         <View style={styles.header}>
             <View style={styles.container}>
                 <Dropdown
                     style={[styles.dropdown]}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    inputSearchStyle={styles.inputSearchStyle}
-                    iconStyle={styles.iconStyle}
-                    data={data}
+                    placeholderStyle={styles.placeholder}
+                    selectedTextStyle={styles.selected_text}
+                    inputSearchStyle={styles.input_search}
+                    iconStyle={styles.icon_style}
+                    data={Object.keys(cityGeolocation).map(el => ({
+                        label: el,
+                        value: el
+                    }))}
                     search
                     maxHeight={300}
                     labelField="label"
@@ -38,10 +63,7 @@ export const Header = () => {
                     value={value}
                     onFocus={() => setIsFocus(true)}
                     onBlur={() => setIsFocus(false)}
-                    onChange={item => {
-                        setValue(item.value);
-                        setIsFocus(false);
-                    }}
+                    onChange={onChangeHandler}
 
                 />
             </View>
@@ -51,7 +73,6 @@ export const Header = () => {
 
 
 const styles = StyleSheet.create({
-
     header: {
         paddingTop: Platform.OS === 'ios' ? 50 : 20,
     },
@@ -78,34 +99,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         fontSize: 14,
     },
-    placeholderStyle: {
+    placeholder: {
         fontSize: 16,
     },
-    selectedTextStyle: {
+    selected_text: {
         fontSize: 16,
     },
-    iconStyle: {
+    icon_style: {
         width: 20,
         height: 20,
     },
-    inputSearchStyle: {
+    input_search: {
         height: 40,
         fontSize: 16,
     },
 })
-//         <View style={styles.header}>
-//                 <Select
-//                     placeholderTextColor={'text.500'}
-//                     variant={"unstyled"}
-//                     placeholder="Select Location"
-//                     selectedValue={location}
-//                     onValueChange={(itemValue: string) => setLocation(itemValue)}
-//                 >
-//                     <Select.Item label="My location" value="key0"/>
-//                     <Select.Item label="Brest" value="key1"/>
-//                     <Select.Item label="Vitebsk" value="key2"/>
-//                     <Select.Item label="Gomel" value="key3"/>
-//                     <Select.Item label="Grodno" value="key4"/>
-//                     <Select.Item label="Mogilev" value="key5"/>
-//                     <Select.Item label="Minsk" value="key6"/>
-//                 </Select>
+

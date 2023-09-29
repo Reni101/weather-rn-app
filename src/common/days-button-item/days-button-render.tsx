@@ -1,9 +1,10 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text} from "react-native";
+import {Pressable, StyleSheet, Text, View} from "react-native";
+import {PADDING, WIDTH} from "../../constant/constant";
 
 type PropsType = {
     selectedDays: number
-    setSelectDays: (value:number)=>void
+    setSelectDays: (value: number) => void
 }
 
 const arrDays = [1, 3, 5]
@@ -15,7 +16,7 @@ export const DaysButtonRender = (props: PropsType) => {
     }
 
 
-    return <>
+    return <View style={styles.select_day_container}>
         {arrDays.map((days) => {
             return <Pressable hitSlop={30}
                               key={days}
@@ -29,8 +30,7 @@ export const DaysButtonRender = (props: PropsType) => {
                 <Text>{days}</Text>
             </Pressable>
         })}
-
-    </>
+    </View>
 
 
 };
@@ -45,5 +45,15 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderWidth: 0.5,
         borderRadius: 4,
+    },
+    select_day_container: {
+        width: WIDTH - PADDING,
+        borderRadius: 8,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap: 30,
+        padding: 10,
+        backgroundColor: 'white'
     },
 })
